@@ -23,7 +23,7 @@ function convertImage($originalImage, $outputImage, $quality) {
     return 1;
 }
 
-function upload_foto($arquivo, $nome_equipe) {
+function upload_foto($arquivo, $nome_foto) {
   // Configurações ftp
   $servidor_ftp = 'ftp.ecoswim.com.br';
   $usuario_ftp = 'ecoswim';
@@ -37,7 +37,7 @@ function upload_foto($arquivo, $nome_equipe) {
   $tamanho_arquivo = $arquivo['size'];
   $arquivo_temp = $arquivo['tmp_name'];
   $extensao_arquivo = strrchr( $nome_arquivo, '.' );
-  $foto_convertida = $nome_equipe . '.jpg';
+  $foto_convertida = $nome_foto . '.jpg';
   $destino = $caminho . "avatares das equipes/" . $foto_convertida;
 
   if ( ! $sobrescrever && file_exists( $destino ) ) {

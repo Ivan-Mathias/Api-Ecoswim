@@ -17,6 +17,16 @@ if (mysqli_connect_errno()) {
 
 
 header("Content-Type: application/json; charset=UTF-8");
-header('Access-Control-Allow-Origin: ' . "http://ecoswim.com.br");
+$allowed_domains = [
+    "http://www.ecoswim.com.br",
+    "http://ecoswim.com.br",
+    "https://www.ecoswim.com.br",
+    "https://ecoswim.com.br",
+    "https://ipe.colabore.org/",
+  ];
+
+if (in_array($_SERVER['HTTP_ORIGIN'], $allowed_domains)) {
+    header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+}
 header("Access-Control-Allow-Methods: OPTIONS, GET,PUT,POST,DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");

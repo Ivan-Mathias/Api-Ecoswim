@@ -19,11 +19,10 @@ if (isset($post['nome']) && isset($post['email']) && isset($post['senha'])) {
         http_response_code(500);
       }
     }else {
+        $resposta['id'] = $conexao->insert_id;
+        echo json_encode($resposta);
         http_response_code(201);
     }
-
-    $stmt->close();
-    $conexao->close();
 
   } catch (\Exception $e) {
     throw $e;
@@ -50,6 +49,41 @@ if (isset($post['nome']) && isset($post['email']) && isset($post['senha'])) {
   }
 
   echo json_encode($usuario);
+
+} elseif (isset($post['id']) && ($post['atualizar'])) {
+  $senha = password_hash($post['senha'], PASSWORD_DEFAULT);
+  if (isset($post['nome']) && isset($post['senha'])) {
+    $stmt = $conexao->prepare("UPDATE usuarios SET nome = ?, senha = ? WHERE id = ?");
+    $stmt->bind_param("ssi", $post['nome'], $senha, $post['id']);
+  } elseif (isset($post['nome'])) {
+    $stmt = $conexao->prepare("UPDATE usuarios SET nome = ? WHERE id = ?");
+    $stmt->bind_param("si", $post['nome'], $post['id']);
+  } elseif (isset($post['senha'])) {
+    $stmt = $conexao->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
+    $stmt->bind_param("si", $senha, $post['id']);
+  }
+  $stmt->execute();
+
+  if ($stmt->execute() == false) {
+    throw new Exception('Stmt falhou');
+    http_response_code(500);
+  }else {
+    http_response_code(201);
+  }
+} elseif (isset($post['sair']) && isset($post['id'])) {
+  $stmt = $conexao->prepare("UPDATE usuarios SET equipe = NULL WHERE id = ?");
+  $stmt->bind_param("i", $post['id']);
+  $stmt->execute();
+
+  if ($stmt->execute() == false) {
+    throw new Exception('Stmt falhou');
+    http_response_code(500);
+  }else {
+    http_response_code(201);
+  }
 }
+
+$stmt->close();
+$conexao->close();
 
 ?>
