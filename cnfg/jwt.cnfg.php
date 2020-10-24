@@ -7,13 +7,14 @@ function base64_encode_url($string) {
     return str_replace(['+','/','='], ['-','_',''], base64_encode($string));
 }
 
-function createLoginToken($id, $nome, $sobrenome, $email, $avatar) {
+function createLoginToken($id, $nome, $equipe, $email, $chefe, $admin) {
     $payload = [
-      "sub" => $id,
+      "id" => $id,
       "nome" => $nome,
-      "sobrenome" => $sobrenome,
+      "equipe" => $equipe,
       "email" => $email,
-      "avatar" => $avatar,
+      "chefe" => $chefe,
+      "admin" => $admin,
       "iat" => time(),
     ];
 

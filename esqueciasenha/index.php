@@ -24,7 +24,7 @@ if (isset($post['email']) && isset($post['senha'])) {
 
 
 }elseif (isset($_GET['email'])) {
-  $token = createResetToken($_GET['email'], $key);
+  $token = createResetToken($_GET['email']);
   $link = "https://ecoswim.com.br/esqueciasenha/".$token;
 
   $stmt = $conexao->prepare("SELECT nome FROM usuarios WHERE email = (?) LIMIT 1");

@@ -2,7 +2,7 @@
 require '../cnfg/jwt.cnfg.php';
 
 if (isset($_GET['id']) && isset($_GET['nome']) && isset($_GET['equipe']) && isset($_GET['email']) && isset($_GET['chefe']) && isset($_GET['admin'])) {
-  echo createLoginToken($_GET['id'], $_GET['nome'], $_GET['equipe'], $_GET['email'], $_GET['chefe'], isset($_GET['admin']), $key);
+  echo createLoginToken($_GET['id'], $_GET['nome'], $_GET['equipe'], $_GET['email'], $_GET['chefe'], $_GET['admin']);
 
 }elseif (!empty(getAuthorizationHeader())) {
   $received = explode(".", getAuthorizationHeader());
