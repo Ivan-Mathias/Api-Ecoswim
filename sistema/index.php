@@ -81,6 +81,24 @@ if (isset($post['nome']) && isset($post['email']) && isset($post['senha'])) {
   }else {
     http_response_code(201);
   }
+} elseif (isset($post['id']) && (isset($post['atualizarinscricao']))) {
+  $stmt = $conexao->prepare("UPDATE usuarios SET inscricao = ? WHERE id = ?");
+  $stmt->bind_param("si", $post['atualizarinscricao'], $post['id']);
+  $stmt->execute();
+
+  if ($stmt->execute() == false) {
+    throw new Exception('Stmt falhou');
+    http_response_code(500);
+  }else {
+    http_response_code(201);
+  }
+} elseif (isset($_GET['numerodepessoasinscritas'])) {
+  $stmt = $conexao->prepare("SELECT COUNT(nome) AS numerodepessoasinscritas FROM usuarios");
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $outp = $result->fetch_all(MYSQLI_ASSOC)[0];
+  echo json_encode($outp, JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK );
+  http_response_code(200);
 }
 
 $stmt->close();

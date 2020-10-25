@@ -95,7 +95,7 @@ if (isset($_POST['id']) && isset($_POST['nomeequipe']) && isset($_POST['tipo']) 
       $stmt = $conexao->prepare("SELECT * FROM equipes WHERE id = ?");
       break;
     case 'membros':
-      $stmt = $conexao->prepare("SELECT nome, inscricao FROM usuarios WHERE equipe =  ?");
+      $stmt = $conexao->prepare("SELECT id, nome, inscricao FROM usuarios WHERE equipe =  ?");
       break;
     case 'extras':
       // code...
